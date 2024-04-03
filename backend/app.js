@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import productRoutes from './routes/products.js'
 import errorMiddleware from "./middlewares/errors.js";
 import authRoutes from './routes/auth.js'
+import orderRoutes from './routes/order.js'
 
 import { connectDatabase } from "./config/dbConnect.js";
 
@@ -33,6 +34,7 @@ connectDatabase()
 
 app.use("/api/v1",productRoutes);
 app.use("/api/v1",authRoutes);
+app.use("/api/v1",orderRoutes)
 
 app.use(errorMiddleware);
 
