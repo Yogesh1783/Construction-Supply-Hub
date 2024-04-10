@@ -23,7 +23,7 @@ process.on('uncaughtException',(err)=>{
 
 dotenv.config({ path: "backend/config/config.env" });
 
-app.use(express.json());
+app.use(express.json({ limit:"10 mb"}));
 app.use(cookieParser());
 
 //Connecting to Database
