@@ -1,51 +1,57 @@
 import express from "express";
-const app=express();
+const app = express();
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import productRoutes from './routes/products.js'
-import errorMiddleware from "./middlewares/errors.js";
-import authRoutes from './routes/auth.js'
-import orderRoutes from './routes/order.js'
-
 import { connectDatabase } from "./config/dbConnect.js";
+import errorMiddleware from "./middlewares/errors.js";
 
-
-
-
-//handle uncaught exceptions
-process.on('uncaughtException',(err)=>{
-    console.log(`ERROR: ${err}`);
-    console.log('Shutting down due to uncaught exception')
-    process.exit(1);
-})
-// console.log(hello);
-
+// Handle Uncaught exceptions
+process.on("uncaughtException", (err) => {
+  console.log(`ERROR: ${err}`);
+  console.log("Shutting down due to uncaught expection");
+  process.exit(1);
+});
 
 dotenv.config({ path: "backend/config/config.env" });
 
-app.use(express.json({ limit:"10 mb"}));
+// Connecting to database
+connectDatabase();
+
+app.use(
+  express.json({
+    limit: "10mb",
+    verify: (req, res, buf) => {
+      req.rawBody = buf.toString();
+    },
+  })
+);
 app.use(cookieParser());
 
-//Connecting to Database
-connectDatabase()
+// Import all routes
+import productRoutes from "./routes/products.js";
+import authRoutes from "./routes/auth.js";
+import orderRoutes from "./routes/order.js";
+import paymentRoutes from "./routes/payment.js";
 
+app.use("/api/v1", productRoutes);
+app.use("/api/v1", authRoutes);
+app.use("/api/v1", orderRoutes);
+app.use("/api/v1", paymentRoutes);
 
-//Import all routes
-
-app.use("/api/v1",productRoutes);
-app.use("/api/v1",authRoutes);
-app.use("/api/v1",orderRoutes)
-
+// Using error middleware
 app.use(errorMiddleware);
 
-const server=app.listen(process.env.PORT, () => {
-    console.log(`server started on PORT:${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
+const server = app.listen(process.env.PORT, () => {
+  console.log(
+    `Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`
+  );
 });
 
-//handle unhandler promise rejections means for developer error something releated to  syntax error
-process.on('unhandledRejection',(err)=>{
-    console.log(`ERROR:${err}`);
-    console.log('Shutting down server due to unhandled promise rejection');
-    server.close();
+//Handle Unhandled Promise rejections
+process.on("unhandledRejection", (err) => {
+  console.log(`ERROR: ${err}`);
+  console.log("Shutting down server due to Unhandled Promise Rejection");
+  server.close(() => {
     process.exit(1);
-})
+  });
+});
