@@ -20,7 +20,7 @@ export const stripeCheckoutSession = catchAsyncErrors(
           },
           unit_amount: item?.price * 100,
         },
-        tax_rates: ["txr_1P4LjASGYGO1kdGwNh8FQr9m"],
+        tax_rates: ["txr_1LlBSDA7jBHqn8SB8z4waAin"],
         quantity: item?.quantity,
       };
     });
@@ -29,8 +29,8 @@ export const stripeCheckoutSession = catchAsyncErrors(
 
     const shipping_rate =
       body?.itemsPrice >= 200
-        ? "shr_1P4L0fSGYGO1kdGwpE0dfONu"
-        : "shr_1P4KziSGYGO1kdGwLWqsUIwR";
+        ? "shr_1LlBW5A7jBHqn8SBG2fsAWwT"
+        : "shr_1NQYwEA7jBHqn8SBs5alau8k";
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

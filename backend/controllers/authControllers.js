@@ -97,7 +97,7 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
-      subject: "CSH Password Recovery",
+      subject: "ShopIT Password Recovery",
       message,
     });
 
