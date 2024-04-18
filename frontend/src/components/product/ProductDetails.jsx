@@ -7,8 +7,8 @@ import StarRatings from "react-star-ratings";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItem } from "../../redux/features/cartSlice";
 import MetaData from "../layout/MetaData";
+import NewReview from "../reviews/NewReview";
 import ListReviews from "../reviews/ListReviews";
-import NewReview from "./../reviews/NewReview";
 
 const ProductDetails = () => {
   const params = useParams();
