@@ -5,6 +5,7 @@ import {
   useSubmitReviewMutation,
 } from "../../redux/api/productsApi";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const NewReview = ({ productId }) => {
   const [rating, setRating] = useState(0);
@@ -14,7 +15,10 @@ const NewReview = ({ productId }) => {
     useSubmitReviewMutation();
 
   const { data } = useCanUserReviewQuery(productId);
-  const canReview = data?.canReview;
+
+  const { user } = useSelector((state) => state.auth);
+
+  const isUser = user && user.role === "user";
 
   useEffect(() => {
     if (error) {
@@ -33,7 +37,7 @@ const NewReview = ({ productId }) => {
 
   return (
     <div>
-      {canReview && (
+      {isUser && (
         <button
           id="review_btn"
           type="button"

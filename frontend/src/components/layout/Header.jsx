@@ -13,6 +13,8 @@ const Header = () => {
 
   const { user } = useSelector((state) => state.auth);
 
+  const isAdmin = user && user.role === "admin";
+
   const { cartItems } = useSelector((state) => state.cart);
 
   const logoutHandler = () => {
@@ -24,9 +26,12 @@ const Header = () => {
     <nav className="navbar row">
       <div className="col-12 col-md-3 ps-5">
         <div className="navbar-brand">
-          <a href="/">
+          <a href="/" style={{ textDecoration: "none", color: "white" }}>
             {/* <img src="/images/shopit_logo.png" alt="ShopIT Logo" /> */}
-            <p>{/* <b>Construction Supply Hub</b> */}</p>
+            <p>
+              {" "}
+              <b>Construction Supply Hub</b>{" "}
+            </p>
           </a>
         </div>
       </div>
@@ -70,10 +75,12 @@ const Header = () => {
               className="dropdown-menu w-100"
               aria-labelledby="dropDownMenuButton"
             >
-              <Link className="dropdown-item" to="/admin/dashboard">
-                {" "}
-                Dashboard{" "}
-              </Link>
+              {isAdmin && (
+                <Link className="dropdown-item" to="/admin/dashboard">
+                  {" "}
+                  Dashboard{" "}
+                </Link>
+              )}
 
               <Link className="dropdown-item" to="/me/orders">
                 {" "}
