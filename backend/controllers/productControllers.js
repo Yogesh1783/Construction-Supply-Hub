@@ -34,6 +34,8 @@ export const newProduct = catchAsyncErrors(async (req, res) => {
   });
 });
 
+
+
 // Get single product details   =>  /api/v1/products/:id
 export const getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req?.params?.id).populate(
@@ -51,6 +53,15 @@ export const getProductDetails = catchAsyncErrors(async (req, res, next) => {
 
 // Get products - ADMIN   =>  /api/v1/admin/products
 export const getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(200).json({
+    products,
+  });
+});
+
+// Get products - Shopkeeper   =>  /api/v1/shopkeeper/products
+export const getShopkeeperProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
 
   res.status(200).json({

@@ -27,13 +27,51 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      enum: ["user", "shopkeeper"],
       default: "user",
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+
+    shopName: {
+      type: String,
+      maxLength: [100, "Your shop name cannot exceed 100 characters"],
+      // This field is only required for shopkeepers
+      // You can add other validations as needed
+    },
+    shopAddress: {
+      type: String,
+      // This field is only required for shopkeepers
+      // You can add other validations as needed
+    },
+    pinCode: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
+
+// Middleware to restrict fields for regular users
+userSchema.pre("save", function(next) {
+  if (this.role !== "shopkeeper") {
+    this.shopName = undefined;
+    this.shopAddress = undefined;
+    this.pinCode = undefined;
+  }
+  next();
+});
+
+// Middleware to restrict fields for regular users during update
+userSchema.pre("findOneAndUpdate", function(next) {
+  if (this._update.role !== "shopkeeper") {
+    this._update.$unset = {
+      shopName: 1,
+      shopAddress: 1,
+      pinCode: 1
+    };
+  }
+  next();
+});
 
 // Encrypting password before saving the user
 userSchema.pre("save", async function (next) {
