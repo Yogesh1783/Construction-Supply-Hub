@@ -36,13 +36,11 @@ const userSchema = new mongoose.Schema(
     shopName: {
       type: String,
       maxLength: [100, "Your shop name cannot exceed 100 characters"],
-      // This field is only required for shopkeepers
-      // You can add other validations as needed
+      
     },
     shopAddress: {
       type: String,
-      // This field is only required for shopkeepers
-      // You can add other validations as needed
+      
     },
     pinCode: {
       type: String,
