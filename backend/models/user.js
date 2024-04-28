@@ -61,7 +61,13 @@ userSchema.pre("save", function(next) {
 
 // Middleware to restrict fields for regular users during update
 userSchema.pre("findOneAndUpdate", function(next) {
-  if (this._update.role !== "shopkeeper") {
+  const update = this.getUpdate();
+  if (update.role === "shopkeeper") {
+    this._update.shopName = update.shopName;
+    this._update.shopAddress = update.shopAddress;
+    this._update.pinCode = update.pinCode;
+  } else if (update.role === "user") {
+    // Clear shop-related fields if role is updated to "user"
     this._update.$unset = {
       shopName: 1,
       shopAddress: 1,
@@ -70,6 +76,7 @@ userSchema.pre("findOneAndUpdate", function(next) {
   }
   next();
 });
+
 
 // Encrypting password before saving the user
 userSchema.pre("save", async function (next) {

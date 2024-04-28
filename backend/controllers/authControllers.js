@@ -220,15 +220,25 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
 // Update User Details - ADMIN  =>  /api/v1/admin/users/:id
 export const updateUser = catchAsyncErrors(async (req, res, next) => {
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-    role: req.body.role,
+  const { name, email, role, shopName, shopAddress, pinCode } = req.body;
+
+  const updatedUserData = {
+    name,
+    email,
+    role,
+    // Include shop-related fields if the user's role is updated to "shopkeeper"
+    ...(role === "shopkeeper" && { shopName, shopAddress, pinCode }),
   };
 
-  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+  const user = await User.findByIdAndUpdate(req.params.id, updatedUserData, {
     new: true,
   });
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User not found with id: ${req.params.id}`, 404)
+    );
+  }
 
   res.status(200).json({
     user,
