@@ -15,6 +15,9 @@ const UpdateUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const [shopName, setShopName] = useState("");
+  const [shopAddress, setShopAddress] = useState("");
+  const [pinCode, setPinCode] = useState("");
 
   const navigate = useNavigate();
   const params = useParams();
@@ -28,6 +31,12 @@ const UpdateUser = () => {
       setName(data?.user?.name);
       setEmail(data?.user?.email);
       setRole(data?.user?.role);
+      // Set shop related fields if user is a shopkeeper
+      if (data.user.role === "shopkeeper") {
+        setShopName(data.user.shopName || "");
+        setShopAddress(data.user.shopAddress || "");
+        setPinCode(data.user.pinCode || "");
+      }
     }
   }, [data]);
 
@@ -49,6 +58,8 @@ const UpdateUser = () => {
       name,
       email,
       role,
+      // Include shop related fields if user is a shopkeeper
+      ...(role === "shopkeeper" && { shopName, shopAddress, pinCode }),
     };
 
     updateUser({ id: params?.id, body: userData });
@@ -106,6 +117,53 @@ const UpdateUser = () => {
                 <option value="shopkeeper">shopkeeper</option>
               </select>
             </div>
+
+            {/* Additional fields for shopkeeper */}
+            {role === "shopkeeper" && (
+              <>
+                <div className="mb-3">
+                  <label htmlFor="shopName_field" className="form-label">
+                    Shop Name
+                  </label>
+                  <input
+                    type="text"
+                    id="shopName_field"
+                    className="form-control"
+                    name="shopName"
+                    value={shopName}
+                    onChange={(e) => setShopName(e.target.value)}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="shopAddress_field" className="form-label">
+                    Shop Address
+                  </label>
+                  <input
+                    type="text"
+                    id="shopAddress_field"
+                    className="form-control"
+                    name="shopAddress"
+                    value={shopAddress}
+                    onChange={(e) => setShopAddress(e.target.value)}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="pincode_field" className="form-label">
+                    PinCode
+                  </label>
+                  <input
+                    type="text"
+                    id="pincode_field"
+                    className="form-control"
+                    name="pincode"
+                    value={pinCode}
+                    onChange={(e) => setPinCode(e.target.value)}
+                  />
+                </div>
+              </>
+            )}
 
             <button type="submit" className="btn update-btn w-100 py-2">
               Update
