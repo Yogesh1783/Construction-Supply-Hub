@@ -32,14 +32,32 @@ export const orderApi = createApi({
       query: ({ startDate, endDate }) =>
         `/admin/get_sales/?startDate=${startDate}&endDate=${endDate}`,
     }),
+    getShopkeeperDashboardSales: builder.query({
+      query: ({ startDate, endDate }) =>
+        `/shopkeeper/get_sales/?startDate=${startDate}&endDate=${endDate}`,
+    }),
     getAdminOrders: builder.query({
       query: () => `/admin/orders`,
       providesTags:["AdminOrders"],
+    }),
+    getShopkeeperOrders: builder.query({
+      query: () => `/shopkeeper/orders`,
+      providesTags:["ShopkeeperOrders"],
     }),
     updateOrder: builder.mutation({
       query({ id, body }) {
         return {
           url: `/admin/orders/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Order"],
+    }),
+    updateShopkeeperOrder: builder.mutation({
+      query({ id, body }) {
+        return {
+          url: `/shopkeeper/orders/${id}`,
           method: "PUT",
           body,
         };
@@ -55,6 +73,15 @@ export const orderApi = createApi({
       },
       invalidatesTags: ["AdminOrders"],
     }),
+    deleteShopkeeperOrder: builder.mutation({
+      query(id) {
+        return {
+          url: `/shopkeeper/orders/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["ShopkeeperOrders"],
+    }),
   }),
 });
 
@@ -67,5 +94,10 @@ export const {
   useGetAdminOrdersQuery,
   useUpdateOrderMutation,
   useDeleteOrderMutation,
+  useLazyGetShopkeeperDashboardSalesQuery,
+  useGetShopkeeperOrdersQuery,
+  useDeleteShopkeeperOrderMutation,
+  useUpdateShopkeeperOrderMutation,
+  
   
 } = orderApi;

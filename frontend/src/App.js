@@ -8,10 +8,14 @@ import { Toaster } from "react-hot-toast";
 
 import useUserRoutes from "./components/routes/userRoutes";
 import useAdminRoutes from "./components/routes/adminRoutes";
+import useShopkeeperRoutes from './components/routes/shopkeeperRoutes';
 
 function App() {
   const userRoutes = useUserRoutes();
   const adminRoutes = useAdminRoutes();
+  const shopkeeperRoutes = useShopkeeperRoutes();
+
+  
 
   return (
     <Router>
@@ -23,6 +27,7 @@ function App() {
           <Routes>
             {userRoutes}
             {adminRoutes}
+            {shopkeeperRoutes}
           </Routes>
         </div>
 

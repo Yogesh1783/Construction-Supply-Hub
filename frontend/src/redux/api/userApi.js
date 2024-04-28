@@ -94,7 +94,7 @@ export const userApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["AdminOrders"],
+      invalidatesTags: ["AdminUsers"],
     }),
   }),
 });

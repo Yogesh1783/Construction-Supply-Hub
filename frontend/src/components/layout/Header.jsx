@@ -15,6 +15,8 @@ const Header = () => {
 
   const isAdmin = user && user.role === "admin";
 
+  const isShopkeeper = user && user.role === "shopkeeper";
+
   const { cartItems } = useSelector((state) => state.cart);
 
   const logoutHandler = () => {
@@ -75,8 +77,11 @@ const Header = () => {
               className="dropdown-menu w-100"
               aria-labelledby="dropDownMenuButton"
             >
-              {isAdmin && (
-                <Link className="dropdown-item" to="/admin/dashboard">
+              {(isAdmin || isShopkeeper) && (
+                <Link
+                  className="dropdown-item"
+                  to={isAdmin ? "/admin/dashboard" : "/shopkeeper/dashboard"}
+                >
                   {" "}
                   Dashboard{" "}
                 </Link>

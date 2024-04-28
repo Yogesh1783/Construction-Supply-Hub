@@ -22,6 +22,11 @@ export const productApi = createApi({
       query: (id) => `/products/${id}`,
       providesTags: ["Product"],
     }),
+
+    getShopkeeperProductDetails: builder.query({
+      query: (id) => `/products/${id}`,
+      providesTags: ["Product"],
+    }),
     submitReview: builder.mutation({
       query(body) {
         return {
@@ -39,6 +44,10 @@ export const productApi = createApi({
       query: () => `/admin/products`,
       providesTags: ["AdminProducts"],
     }),
+    getShopkeeperProducts: builder.query({
+      query: () => `/shopkeeper/products`,
+      providesTags: ["ShopkeeperProducts"],
+    }),
     createProduct: builder.mutation({
       query(body) {
         return {
@@ -49,6 +58,16 @@ export const productApi = createApi({
       },
       invalidatesTags: ["AdminProducts"],
     }),
+    createShopkeeperProduct: builder.mutation({
+      query(body) {
+        return {
+          url: "/shopkeeper/products",
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: ["ShopkeeperProducts"],
+    }),
     updateProduct: builder.mutation({
       query({ id, body }) {
         return {
@@ -58,6 +77,16 @@ export const productApi = createApi({
         };
       },
       invalidatesTags: ["Product", "AdminProducts"],
+    }),
+    updateShopkeeperProduct: builder.mutation({
+      query({ id, body }) {
+        return {
+          url: `/shopkeeper/products/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Product", "ShopkeeperProducts"],
     }),
     uploadProductImages: builder.mutation({
       query({ id, body }) {
@@ -88,6 +117,15 @@ export const productApi = createApi({
       },
       invalidatesTags: ["AdminProducts"],
     }),
+    deleteShopkeeperProduct: builder.mutation({
+      query(id) {
+        return {
+          url: `/shopkeeper/products/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["ShopkeeperProducts"],
+    }),
     getProductReviews: builder.query({
       query: (productId) => `/reviews?id=${productId}`,
       providesTags: ["Reviews"],
@@ -117,4 +155,9 @@ export const {
   useDeleteProductMutation,
   useLazyGetProductReviewsQuery,
   useDeleteReviewMutation,
+  useGetShopkeeperProductsQuery,
+  useCreateShopkeeperProductMutation,
+  useDeleteShopkeeperProductMutation,
+  useUpdateShopkeeperProductMutation,
+  useGetShopkeeperProductDetailsQuery,
 } = productApi;

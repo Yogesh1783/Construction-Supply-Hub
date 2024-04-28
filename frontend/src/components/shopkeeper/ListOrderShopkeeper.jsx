@@ -5,19 +5,19 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 
-import AdminLayout from "../layout/AdminLayout";
 import {
-  useDeleteOrderMutation,
-  useGetAdminOrdersQuery,
+  useDeleteShopkeeperOrderMutation,
+  useGetShopkeeperOrdersQuery,
 } from "../../redux/api/orderApi";
+import ShopkeeperLayout from "../layout/ShopkeeperLayout";
 
-const ListOrders = () => {
-  const { data, isLoading, error } = useGetAdminOrdersQuery();
+const ListOrderShopkeeper = () => {
+  const { data, isLoading, error } = useGetShopkeeperOrdersQuery();
 
   const [
     deleteOrder,
     { error: deleteError, isLoading: isDeleteLoading, isSuccess },
-  ] = useDeleteOrderMutation();
+  ] = useDeleteShopkeeperOrderMutation();
 
   useEffect(() => {
     if (error) {
@@ -73,7 +73,7 @@ const ListOrders = () => {
         actions: (
           <>
             <Link
-              to={`/admin/orders/${order?._id}`}
+              to={`/shopkeeper/orders/${order?._id}`}
               className="btn btn-outline-primary"
             >
               <i className="fa fa-pencil"></i>
@@ -97,7 +97,7 @@ const ListOrders = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <AdminLayout>
+    <ShopkeeperLayout>
       <MetaData title={"All Orders"} />
 
       <h1 className="my-5">{data?.orders?.length} Orders</h1>
@@ -109,8 +109,8 @@ const ListOrders = () => {
         striped
         hover
       />
-    </AdminLayout>
+    </ShopkeeperLayout>
   );
 };
 
-export default ListOrders;
+export default ListOrderShopkeeper;
