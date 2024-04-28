@@ -21,12 +21,26 @@ router
   .get(isAuthenticatedUser, authorizeRoles("admin"), getSales);
 
 router
+  .route("/shopkeeper/get_sales")
+  .get(isAuthenticatedUser, authorizeRoles("shopkeeper"), getSales);
+
+
+router
   .route("/admin/orders")
   .get(isAuthenticatedUser, authorizeRoles("admin"), allOrders);
+
+router
+  .route("/shopkeeper/orders")
+  .get(isAuthenticatedUser, authorizeRoles("shopkeeper"), allOrders);
 
 router
   .route("/admin/orders/:id")
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder)
   .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
+
+router
+  .route("/shopkeeper/orders/:id")
+  .put(isAuthenticatedUser, authorizeRoles("shopkeeper"), updateOrder)
+  .delete(isAuthenticatedUser, authorizeRoles("shopkeeper"), deleteOrder);
 
 export default router;
