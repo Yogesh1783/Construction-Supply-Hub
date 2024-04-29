@@ -75,13 +75,13 @@ const Cart = () => {
                         />
                       </div>
                       <div className="col-5 col-lg-3">
-                        <Link to={`/products/${item?.product}`}>
+                        <Link to={`/products/Rs.{item?.product}`}>
                           {" "}
                           {item?.name}{" "}
                         </Link>
                       </div>
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                        <p id="card_item_price">${item?.price}</p>
+                        <p id="card_item_price">Rs.{item?.price}</p>
                       </div>
                       <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                         <div className="stockCounter d-inline">
@@ -135,7 +135,7 @@ const Cart = () => {
                 <p>
                   Est. total:{" "}
                   <span className="order-summary-values">
-                    $
+                    Rs.
                     {cartItems
                       ?.reduce(
                         (acc, item) => acc + item?.quantity * item.price,

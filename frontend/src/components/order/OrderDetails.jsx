@@ -106,7 +106,7 @@ const OrderDetails = () => {
               </tr>
               <tr>
                 <th scope="row">Amount Paid</th>
-                <td>${totalAmount}</td>
+                <td>Rs.{totalAmount}</td>
               </tr>
             </tbody>
           </table>
@@ -127,11 +127,11 @@ const OrderDetails = () => {
                 </div>
 
                 <div className="col-5 col-lg-5">
-                  <Link to={`/products/${item?.product}`}>{item?.name}</Link>
+                  <Link to={`/products/Rs.{item?.product}`}>{item?.name}</Link>
                 </div>
 
                 <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                  <p>${item?.price}</p>
+                  <p>Rs.{item?.price}</p>
                 </div>
 
                 <div className="col-4 col-lg-3 mt-4 mt-lg-0">

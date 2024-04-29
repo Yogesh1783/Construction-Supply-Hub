@@ -31,7 +31,7 @@ const Invoice = () => {
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, 0);
-      pdf.save(`invoice_${order?._id}.pdf`);
+      pdf.save(`invoice_Rs.{order?._id}.pdf`);
     });
   };
 
