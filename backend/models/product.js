@@ -37,17 +37,17 @@ const productSchema = new mongoose.Schema(
       required: [true, "Please enter product category"],
       enum: {
         values: [
-            "Select Categories",
-            "Building Materials",
-            "Strucrural Steel",
-            "Roofing Materials",
-            "Plumbing Materials",
-            "Electricals Materials",
-            "Finishing Materials",
-            "Decorative Materials",
-            "Safety Equipments",
-            "Power Tools and Hand Tools",
-            "Heavy Machinery and Equipments",
+          "Select Categories",
+          "Building Materials",
+          "Strucrural Steel",
+          "Roofing Materials",
+          "Plumbing Materials",
+          "Electricals Materials",
+          "Finishing Materials",
+          "Decorative Materials",
+          "Safety Equipments",
+          "Power Tools and Hand Tools",
+          "Heavy Machinery and Equipments",
         ],
         message: "Please select correct category",
       },
@@ -66,13 +66,13 @@ const productSchema = new mongoose.Schema(
     },
     shopkeeperId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user' // Reference to the User model for shopkeepers
+      ref: 'User' // Reference to the User model for shopkeepers
     },
     reviews: [
       {
         user: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "user",
+          ref: "User",
           required: true,
         },
         rating: {
@@ -87,7 +87,7 @@ const productSchema = new mongoose.Schema(
     ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: true,
     },
   },
