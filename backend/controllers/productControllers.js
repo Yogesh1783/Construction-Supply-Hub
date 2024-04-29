@@ -64,11 +64,13 @@ export const getAdminProducts = catchAsyncErrors(async (req, res, next) => {
 export const getShopkeeperProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
 
+  // Return only products owned by the requesting shopkeeper
+  const shopkeeperProducts = products.filter(product => product.user.toString() === req.user._id.toString());
+
   res.status(200).json({
-    products,
+    products: shopkeeperProducts,
   });
 });
-
 // Update product details   =>  /api/v1/products/:id
 export const updateProduct = catchAsyncErrors(async (req, res) => {
   let product = await Product.findById(req?.params?.id);
