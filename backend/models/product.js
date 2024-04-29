@@ -64,11 +64,15 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    shopkeeperId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user' // Reference to the User model for shopkeepers
+    },
     reviews: [
       {
         user: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
+          ref: "user",
           required: true,
         },
         rating: {
@@ -83,7 +87,7 @@ const productSchema = new mongoose.Schema(
     ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
   },
