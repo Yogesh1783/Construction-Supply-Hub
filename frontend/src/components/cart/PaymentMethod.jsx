@@ -51,6 +51,8 @@ const PaymentMethod = () => {
       caluclateOrderCost(cartItems);
 
     if (method === "COD") {
+      console.log(cartItems);
+      console.log("Shopkeeper Id", cartItems.shopKeeperId);
       // Create COD Order
       const orderData = {
         shippingInfo,
@@ -62,6 +64,7 @@ const PaymentMethod = () => {
         paymentInfo: {
           status: "Not Paid",
         },
+        shopKeeperId: cartItems[0].shopKeeperId,
         paymentMethod: "COD",
       };
 
@@ -77,6 +80,7 @@ const PaymentMethod = () => {
         shippingAmount: shippingPrice,
         taxAmount: taxPrice,
         totalAmount: totalPrice,
+        shopKeeperId: cartItems[0].shopKeeperId,
       };
 
       stripeCheckoutSession(orderData);
