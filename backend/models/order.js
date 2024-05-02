@@ -29,6 +29,11 @@ const orderSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    shopKeeperId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     orderItems: [
       {
         name: {

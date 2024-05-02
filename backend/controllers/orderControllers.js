@@ -14,6 +14,7 @@ export const newOrder = catchAsyncErrors(async (req, res, next) => {
     totalAmount,
     paymentMethod,
     paymentInfo,
+    shopKeeperId,
   } = req.body;
 
   const order = await Order.create({
@@ -26,6 +27,7 @@ export const newOrder = catchAsyncErrors(async (req, res, next) => {
     paymentMethod,
     paymentInfo,
     user: req.user._id,
+    shopKeeperId,
   });
 
   res.status(200).json({
@@ -61,6 +63,15 @@ export const getOrderDetails = catchAsyncErrors(async (req, res, next) => {
 // Get all orders - ADMIN  =>  /api/v1/admin/orders
 export const allOrders = catchAsyncErrors(async (req, res, next) => {
   const orders = await Order.find();
+
+  res.status(200).json({
+    orders,
+  });
+});
+
+export const allOrdersByShopKeeperId = catchAsyncErrors(async (req, res, next) => {
+  const shopKeeperId = req.params.shopkeeperId;
+  const orders = await Order.find({shopKeeperId});
 
   res.status(200).json({
     orders,

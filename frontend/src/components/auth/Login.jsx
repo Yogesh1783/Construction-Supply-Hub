@@ -16,6 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      localStorage.setItem("loggedInUserId", data.user._id);
       navigate("/");
     }
     if (error) {
