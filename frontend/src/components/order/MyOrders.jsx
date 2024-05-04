@@ -69,14 +69,11 @@ const MyOrders = () => {
           orderStatus: order?.orderStatus,
           actions: (
             <>
-              <Link
-                to={`/me/order/Rs.${order?._id}`}
-                className="btn btn-primary"
-              >
+              <Link to={`/orders/${order?._id}`} className="btn btn-primary">
                 <i className="fa fa-eye"></i>
               </Link>
               <Link
-                to={`/invoice/order/Rs.${order?._id}`}
+                to={`/invoice/orders/${order?._id}`}
                 className="btn btn-success ms-2"
               >
                 <i className="fa fa-print"></i>
