@@ -41,7 +41,7 @@ export const orderApi = createApi({
       providesTags:["AdminOrders"],
     }),
     getShopkeeperOrders: builder.query({
-      query: () => `/shopkeeper/orders`,
+      query: () => `/shopkeeper/orders/${localStorage.getItem("loggedInUserId")}`,
       providesTags:["ShopkeeperOrders"],
     }),
     updateOrder: builder.mutation({

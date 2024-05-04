@@ -21,6 +21,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     logout();
+    localStorage.removeItem("loggedInUserId");
     navigate(0);
   };
 

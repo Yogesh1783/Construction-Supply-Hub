@@ -41,8 +41,8 @@ const ListOrderShopkeeper = () => {
     const orders = {
       columns: [
         {
-          label: "ID",
-          field: "id",
+          label: "Product Name",
+          field: "productName",
           sort: "asc",
         },
         {
@@ -66,28 +66,30 @@ const ListOrderShopkeeper = () => {
     };
 
     data?.orders?.forEach((order) => {
-      orders.rows.push({
-        id: order?._id,
-        paymentStatus: order?.paymentInfo?.status?.toUpperCase(),
-        orderStatus: order?.orderStatus,
-        actions: (
-          <>
-            <Link
-              to={`/shopkeeper/orders/${order?._id}`}
-              className="btn btn-outline-primary"
-            >
-              <i className="fa fa-pencil"></i>
-            </Link>
+      order.orderItems.forEach((orderItem) => {
+        orders.rows.push({
+          productName: orderItem?.name,
+          paymentStatus: order?.paymentInfo?.status?.toUpperCase(),
+          orderStatus: order?.orderStatus,
+          actions: (
+            <>
+              <Link
+                to={`/shopkeeper/orders/${order?._id}`}
+                className="btn btn-outline-primary"
+              >
+                <i className="fa fa-pencil"></i>
+              </Link>
 
-            <button
-              className="btn btn-outline-danger ms-2"
-              onClick={() => deleteOrderHandler(order?._id)}
-              disabled={isDeleteLoading}
-            >
-              <i className="fa fa-trash"></i>
-            </button>
-          </>
-        ),
+              <button
+                className="btn btn-outline-danger ms-2"
+                onClick={() => deleteOrderHandler(order?._id)}
+                disabled={isDeleteLoading}
+              >
+                <i className="fa fa-trash"></i>
+              </button>
+            </>
+          ),
+        });
       });
     });
 

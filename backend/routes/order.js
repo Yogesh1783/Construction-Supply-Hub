@@ -4,6 +4,7 @@ const router = express.Router();
 import { authorizeRoles, isAuthenticatedUser } from "../middlewares/auth.js";
 import {
   allOrders,
+  allOrdersByShopKeeperId,
   deleteOrder,
   getOrderDetails,
   getSales,
@@ -32,6 +33,10 @@ router
 router
   .route("/shopkeeper/orders")
   .get(isAuthenticatedUser, authorizeRoles("shopkeeper"), allOrders);
+
+router
+.route("/shopkeeper/orders/:shopkeeperId")
+.get(isAuthenticatedUser, authorizeRoles("shopkeeper"), allOrdersByShopKeeperId);
 
 router
   .route("/admin/orders/:id")
