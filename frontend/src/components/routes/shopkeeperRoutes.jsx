@@ -7,6 +7,7 @@ import ListOrderShopkeeper from "../shopkeeper/ListOrderShopkeeper";
 import ListProductShopkeeper from "../shopkeeper/ListProductShopkeeper";
 import ProcessOrderShopkeeper from "../shopkeeper/ProcessOrderShopkeeper";
 import UpdateProductShopkeeper from "../shopkeeper/UpdateProductShopkeeper";
+import UploadImageShopkeeper from "../shopkeeper/UploadImageShopkeeper";
 
 const shopkeeperRoutes = () => {
   return (
@@ -49,6 +50,14 @@ const shopkeeperRoutes = () => {
         element={
           <ProtectedRoute shopkeeper={true}>
             <UpdateProductShopkeeper />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/shopkeeper/products/:id/upload_images"
+        element={
+          <ProtectedRoute shopkeeper={true}>
+            <UploadImageShopkeeper />
           </ProtectedRoute>
         }
       />

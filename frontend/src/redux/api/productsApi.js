@@ -98,10 +98,20 @@ export const productApi = createApi({
       },
       invalidatesTags: ["Product"],
     }),
-    deleteProductImage: builder.mutation({
+    uploadShopkeeperProductImages: builder.mutation({
       query({ id, body }) {
         return {
-          url: `/admin/products/${id}/delete_image`,
+          url: `/shopkeeper/products/${id}/upload_images`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Product"],
+    }),
+    deleteShopkeeperProductImage: builder.mutation({
+      query({ id, body }) {
+        return {
+          url: `/shopkeeper/products/${id}/delete_image`,
           method: "PUT",
           body,
         };
@@ -160,4 +170,6 @@ export const {
   useDeleteShopkeeperProductMutation,
   useUpdateShopkeeperProductMutation,
   useGetShopkeeperProductDetailsQuery,
+  useUploadShopkeeperProductImagesMutation,
+  useDeleteShopkeeperProductImageMutation,
 } = productApi;

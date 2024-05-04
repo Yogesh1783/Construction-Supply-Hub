@@ -32,8 +32,8 @@ const MyOrders = () => {
     const orders = {
       columns: [
         {
-          label: "ID",
-          field: "id",
+          label: "Product Name",
+          field: "productName",
           sort: "asc",
         },
         {
@@ -61,24 +61,29 @@ const MyOrders = () => {
     };
 
     data?.orders?.forEach((order) => {
-      orders.rows.push({
-        id: order?._id,
-        amount: `Rs.Rs.{order?.totalAmount}`,
-        status: order?.paymentInfo?.status?.toUpperCase(),
-        orderStatus: order?.orderStatus,
-        actions: (
-          <>
-            <Link to={`/me/order/Rs.{order?._id}`} className="btn btn-primary">
-              <i className="fa fa-eye"></i>
-            </Link>
-            <Link
-              to={`/invoice/order/Rs.{order?._id}`}
-              className="btn btn-success ms-2"
-            >
-              <i className="fa fa-print"></i>
-            </Link>
-          </>
-        ),
+      order.orderItems.forEach((orderItem) => {
+        orders.rows.push({
+          productName: orderItem?.name,
+          amount: `Rs.${order?.totalAmount}`,
+          status: order?.paymentInfo?.status?.toUpperCase(),
+          orderStatus: order?.orderStatus,
+          actions: (
+            <>
+              <Link
+                to={`/me/order/Rs.${order?._id}`}
+                className="btn btn-primary"
+              >
+                <i className="fa fa-eye"></i>
+              </Link>
+              <Link
+                to={`/invoice/order/Rs.${order?._id}`}
+                className="btn btn-success ms-2"
+              >
+                <i className="fa fa-print"></i>
+              </Link>
+            </>
+          ),
+        });
       });
     });
 
