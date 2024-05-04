@@ -16,9 +16,9 @@ import Shipping from "../cart/Shipping";
 import ConfirmOrder from "../cart/ConfirmOrder";
 import PaymentMethod from "../cart/PaymentMethod";
 import MyOrders from "../order/MyOrders";
-import OrderDetails from "../order/OrderDetails";
 import Invoice from "../invoice/Invoice";
 import Home from "../Home";
+import OrderDetails from "../order/OrderDetails";
 
 const userRoutes = () => {
   return (
@@ -103,7 +103,7 @@ const userRoutes = () => {
       />
 
       <Route
-        path="/me/order/:id"
+        path="/orders/:id"
         element={
           <ProtectedRoute>
             <OrderDetails />
@@ -112,7 +112,7 @@ const userRoutes = () => {
       />
 
       <Route
-        path="/invoice/order/:id"
+        path="/invoice/orders/:id"
         element={
           <ProtectedRoute>
             <Invoice />
