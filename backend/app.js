@@ -1,14 +1,15 @@
 import express from "express";
-const app = express();
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDatabase } from "./config/dbConnect.js";
 import errorMiddleware from "./middlewares/errors.js";
 
+const app = express();
+
 // Handle Uncaught exceptions
 process.on("uncaughtException", (err) => {
-  console.log(`ERROR: ${err}`);
-  console.log("Shutting down due to uncaught expection");
+  console.error(`Uncaught Exception: ${err}`);
+  console.log("Shutting down due to uncaught exception");
   process.exit(1);
 });
 
@@ -38,7 +39,6 @@ app.use("/api/v1", authRoutes);
 app.use("/api/v1", orderRoutes);
 app.use("/api/v1", paymentRoutes);
 
-
 // Using error middleware
 app.use(errorMiddleware);
 
@@ -48,9 +48,9 @@ const server = app.listen(process.env.PORT, () => {
   );
 });
 
-//Handle Unhandled Promise rejections
+// Handle Unhandled Promise rejections
 process.on("unhandledRejection", (err) => {
-  console.log(`ERROR: ${err}`);
+  console.error("Unhandled Promise Rejection:", err.stack || err.message);
   console.log("Shutting down server due to Unhandled Promise Rejection");
   server.close(() => {
     process.exit(1);

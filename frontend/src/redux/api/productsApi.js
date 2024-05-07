@@ -12,6 +12,7 @@ export const productApi = createApi({
           page: params?.page,
           keyword: params?.keyword,
           category: params?.category,
+          pinCode: params?.pinCode, // Include pinCode parameter
           "price[gte]": params.min,
           "price[lte]": params.max,
           "ratings[gte]": params?.ratings,

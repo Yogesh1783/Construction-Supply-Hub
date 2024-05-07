@@ -4,6 +4,8 @@ import Order from "../models/order.js";
 import APIFilters from "../utils/apiFilters.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { delete_file, upload_file } from "../utils/cloudinary.js";
+import User from "../models/user.js";
+
 
 // Create new Product   =>  /api/v1/products
 export const getProducts = catchAsyncErrors(async (req, res, next) => {
@@ -23,16 +25,44 @@ export const getProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Create new Product   =>  /api/v1/admin/products
 export const newProduct = catchAsyncErrors(async (req, res) => {
   req.body.user = req.user._id;
 
-  const product = await Product.create(req.body);
+  try {
+    // Fetch the shopkeeper (user) by their ID
+    const shopkeeper = await User.findById(req.user._id);
 
-  res.status(200).json({
-    product,
-  });
+    if (!shopkeeper || shopkeeper.role !== 'shopkeeper') {
+      return res.status(404).json({ error: "Shopkeeper not found" });
+    }
+
+    // Create the product
+    const product = await Product.create({
+      ...req.body,
+      shopkeeperId: req.user._id, // Assigning the shopkeeper ID
+      pinCode: shopkeeper.pinCode, // Assigning the pin code from the shopkeeper
+      shopAddress:shopkeeper.shopAddress,
+      shopName:shopkeeper.shopName,
+    });
+
+    res.status(200).json({
+      product,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
+
+// // Create new Product   =>  /api/v1/admin/products
+// export const newProduct = catchAsyncErrors(async (req, res) => {
+//   req.body.user = req.user._id;
+
+//   const product = await Product.create(req.body);
+
+//   res.status(200).json({
+//     product,
+//   });
+// });
 
 
 

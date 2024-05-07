@@ -143,6 +143,18 @@ const Filters = () => {
           </label>
         </div>
       ))}
+
+      <hr />
+      <h5 className="mb-3">Pin Code</h5>
+      <div className="form-group">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Pin Code"
+          name="pincode"
+          defaultValue={searchParams.get("pincode") || ""}
+        />
+      </div>
     </div>
   );
 };

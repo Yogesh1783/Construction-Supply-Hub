@@ -4,6 +4,7 @@ import { useGetMeQuery } from "../../redux/api/userApi";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLazyLogoutQuery } from "../../redux/api/authApi";
+import PinCode from "./PinCode";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -38,8 +39,11 @@ const Header = () => {
           </a>
         </div>
       </div>
-      <div className="col-12 col-md-6 mt-2 mt-md-0">
+      <div className="col-6 col-md-3 mt-2 mt-md-0">
         <Search />
+      </div>
+      <div className="col-6 col-md-3 mt-2 mt-md-0">
+        <PinCode />
       </div>
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
         <a href="/cart" style={{ textDecoration: "none" }}>

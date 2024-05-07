@@ -12,12 +12,14 @@ const Home = () => {
   let [searchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
   const keyword = searchParams.get("keyword") || "";
+  const pinCode = searchParams.get("pinCode") || "";
+
   const min = searchParams.get("min");
   const max = searchParams.get("max");
   const category = searchParams.get("category");
   const ratings = searchParams.get("ratings");
 
-  const params = { page, keyword };
+  const params = { page, keyword, pinCode };
 
   min !== null && (params.min = min);
   max !== null && (params.max = max);
