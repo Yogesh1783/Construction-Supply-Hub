@@ -28,6 +28,15 @@ app.use(
 );
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  // Check if the cookie has expired
+  if (req.cookies && req.cookies.myCookie && isExpired(req.cookies.myCookie)) {
+    // Clear the cookie
+    res.clearCookie("myCookie");
+  }
+  next();
+});
+
 // Import all routes
 import productRoutes from "./routes/products.js";
 import authRoutes from "./routes/auth.js";

@@ -13,6 +13,7 @@ export const orderApi = createApi({
         };
       },
     }),
+   
     myOrders: builder.query({
       query: () => `/me/orders`,
     }),
@@ -64,6 +65,26 @@ export const orderApi = createApi({
       },
       invalidatesTags: ["Order"],
     }),
+    updateAdminPayment: builder.mutation({
+      query({ id, body }) {
+        return {
+          url: `admin/orders/${id}/update_payment_status`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Order"],
+    }),
+    updateShopkeeperPayment: builder.mutation({
+      query({ id, body }) {
+        return {
+          url: `shopkeeper/orders/${id}/update_payment_status`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Order"],
+    }),
     deleteOrder: builder.mutation({
       query(id) {
         return {
@@ -98,6 +119,8 @@ export const {
   useGetShopkeeperOrdersQuery,
   useDeleteShopkeeperOrderMutation,
   useUpdateShopkeeperOrderMutation,
+  useUpdateAdminPaymentMutation,
+  useUpdateShopkeeperPaymentMutation,
   
   
 } = orderApi;

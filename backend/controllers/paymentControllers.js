@@ -131,6 +131,7 @@ export const stripeWebhook = catchAsyncErrors(async (req, res, next) => {
       };
 
       await Order.create(orderData);
+      console.log(orderData);
 
       res.status(200).json({
         orderData,

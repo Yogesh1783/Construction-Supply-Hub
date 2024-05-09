@@ -11,6 +11,7 @@ import {
   myOrders,
   newOrder,
   updateOrder,
+  updatePaymentStatus,
 } from "../controllers/orderControllers.js";
 
 router.route("/orders/new").post(isAuthenticatedUser, newOrder);
@@ -48,4 +49,7 @@ router
   .put(isAuthenticatedUser, authorizeRoles("shopkeeper"), updateOrder)
   .delete(isAuthenticatedUser, authorizeRoles("shopkeeper"), deleteOrder);
 
+  router
+  .route("/shopkeeper/orders/:id/update_payment_status")
+  .put(isAuthenticatedUser, authorizeRoles("shopkeeper"), updatePaymentStatus)
 export default router;
