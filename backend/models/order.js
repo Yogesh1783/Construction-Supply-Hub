@@ -63,7 +63,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please select payment method"],
       enum: {
-        values: ["COD", "Card"],
+        values: ["COD", "QR"],
         message: "Please select: COD or Card",
       },
     },
@@ -86,6 +86,9 @@ const orderSchema = new mongoose.Schema(
     totalAmount: {
       type: Number,
       required: true,
+    },
+    utr:{
+      type:Number,
     },
     orderStatus: {
       type: String,

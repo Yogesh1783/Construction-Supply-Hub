@@ -64,10 +64,23 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    pinCode: {
+      type: String,
+      required: true
+    },
+    shopName:{
+      type:String,
+      required:true,
+    },
+    shopAddress:{
+      type:String,
+      required:true,
+    },
     shopkeeperId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User' // Reference to the User model for shopkeepers
     },
+   
     reviews: [
       {
         user: {

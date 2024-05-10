@@ -4,8 +4,9 @@ import { useGetMeQuery } from "../../redux/api/userApi";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLazyLogoutQuery } from "../../redux/api/authApi";
+import PinCode from "./PinCode";
 
-const Header = () => {
+const Header = ({ theme }) => {
   const navigate = useNavigate();
 
   const { isLoading } = useGetMeQuery();
@@ -26,97 +27,183 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar row">
-      <div className="col-12 col-md-3 ps-5">
-        <div className="navbar-brand">
-          <a href="/" style={{ textDecoration: "none", color: "white" }}>
-            {/* <img src="/images/shopit_logo.png" alt="ShopIT Logo" /> */}
-            <p>
-              {" "}
-              <b>Construction Supply Hub</b>{" "}
-            </p>
-          </a>
-        </div>
-      </div>
-      <div className="col-12 col-md-6 mt-2 mt-md-0">
-        <Search />
-      </div>
-      <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-        <a href="/cart" style={{ textDecoration: "none" }}>
-          <span id="cart" className="ms-3">
-            {" "}
-            Cart{" "}
-          </span>
-          <span className="ms-1" id="cart_count">
-            {cartItems?.length}
-          </span>
-        </a>
+    <>
+      <style>{`
+      /* Header.css */
 
-        {user ? (
-          <div className="ms-4 dropdown">
-            <button
-              className="btn dropdown-toggle text-white"
-              type="button"
-              id="dropDownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <figure className="avatar avatar-nav">
-                <img
-                  src={
-                    user?.avatar
-                      ? user?.avatar?.url
-                      : "/images/default_avatar.jpg"
-                  }
-                  alt="User Avatar"
-                  className="rounded-circle"
-                />
-              </figure>
-              <span>{user?.name}</span>
-            </button>
-            <div
-              className="dropdown-menu w-100"
-              aria-labelledby="dropDownMenuButton"
-            >
-              {(isAdmin || isShopkeeper) && (
-                <Link
-                  className="dropdown-item"
-                  to={isAdmin ? "/admin/dashboard" : "/shopkeeper/dashboard"}
-                >
-                  {" "}
-                  Dashboard{" "}
-                </Link>
-              )}
+.header-container {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-              <Link className="dropdown-item" to="/me/orders">
+/* Default theme */
+.header-container {
+  background-color: #333;
+  color: white;
+}
+
+/* Light theme */
+.header-container.light {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* Dark theme */
+.header-container.dark {
+  background-color: #222;
+  color: white;
+}
+
+.navbar-brand a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-brand a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-brand p {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.avatar-nav img {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+
+.dropdown-menu {
+  background-color: #333 !important;
+}
+
+.dropdown-item {
+  color: white !important;
+}
+
+.dropdown-item:hover {
+  background-color: #555 !important;
+}
+
+#cart {
+  color: white;
+  font-size: 1.2rem;
+}
+
+#cart_count {
+  background: #fe6701;
+  color: white;
+  border-radius: 50%;
+  padding: 0 5px;
+  font-size: 0.8rem;
+  position: relative;
+  top: -5px;
+}
+
+      `}</style>
+      <nav className={`navbar row header-container ${theme}`}>
+        <div className="col-12 col-md-3 ps-5">
+          <div className="navbar-brand">
+            <a href="/" style={{ textDecoration: "none", color: "white" }}>
+              <p>
                 {" "}
-                Orders{" "}
-              </Link>
-
-              <Link className="dropdown-item" to="/me/profile">
-                {" "}
-                Profile{" "}
-              </Link>
-
-              <Link
-                className="dropdown-item text-danger"
-                to="/"
-                onClick={logoutHandler}
-              >
-                Logout{" "}
-              </Link>
-            </div>
+                <b>Construction Supply Hub</b>{" "}
+              </p>
+            </a>
           </div>
-        ) : (
-          !isLoading && (
-            <Link to="/login" className="btn ms-4" id="login_btn">
+        </div>
+        <div className="col-6 col-md-3 mt-2 mt-md-0">
+          <Search />
+        </div>
+        <div className="col-6 col-md-3 mt-2 mt-md-0">
+          <PinCode />
+        </div>
+        <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+          <a href="/cart" style={{ textDecoration: "none" }}>
+            <span id="cart" className="ms-3">
               {" "}
-              Login{" "}
-            </Link>
-          )
-        )}
-      </div>
-    </nav>
+              Cart{" "}
+            </span>
+            <span className="ms-1" id="cart_count">
+              {cartItems?.length}
+            </span>
+          </a>
+
+          {user ? (
+            <div className="ms-4 dropdown">
+              <button
+                className="btn dropdown-toggle text-white"
+                type="button"
+                id="dropDownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <figure className="avatar avatar-nav">
+                  <img
+                    src={
+                      user?.avatar
+                        ? user?.avatar?.url
+                        : "/images/default_avatar.jpg"
+                    }
+                    alt="User Avatar"
+                    className="rounded-circle"
+                  />
+                </figure>
+                <span>{user?.name}</span>
+              </button>
+              <div
+                className="dropdown-menu w-100"
+                aria-labelledby="dropDownMenuButton"
+              >
+                {(isAdmin || isShopkeeper) && (
+                  <Link
+                    className="dropdown-item"
+                    to={isAdmin ? "/admin/dashboard" : "/shopkeeper/dashboard"}
+                  >
+                    {" "}
+                    Dashboard{" "}
+                  </Link>
+                )}
+
+                <Link className="dropdown-item" to="/me/orders">
+                  {" "}
+                  Orders{" "}
+                </Link>
+
+                <Link className="dropdown-item" to="/me/profile">
+                  {" "}
+                  Profile{" "}
+                </Link>
+
+                <Link
+                  className="dropdown-item text-danger"
+                  to="/"
+                  onClick={logoutHandler}
+                >
+                  Logout{" "}
+                </Link>
+              </div>
+            </div>
+          ) : (
+            !isLoading && (
+              <Link to="/login" className="btn ms-4" id="login_btn">
+                {" "}
+                Login{" "}
+              </Link>
+            )
+          )}
+        </div>
+      </nav>
+    </>
   );
 };
 

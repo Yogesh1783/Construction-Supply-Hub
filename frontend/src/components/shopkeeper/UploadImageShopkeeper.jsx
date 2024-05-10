@@ -11,6 +11,7 @@ import {
   useUploadProductImagesMutation,
   useUploadShopkeeperProductImagesMutation,
 } from "../../redux/api/productsApi";
+import ShopkeeperLayout from "../layout/ShopkeeperLayout";
 
 const UploadImageShopkeeper = () => {
   const fileInputRef = useRef(null);
@@ -47,7 +48,7 @@ const UploadImageShopkeeper = () => {
     if (isSuccess) {
       setImagesPreview([]);
       toast.success("Images Uploaded");
-      navigate("/admin/products");
+      navigate("/shopkeeper/products");
     }
   }, [data, error, isSuccess, deleteError]);
 
@@ -92,7 +93,7 @@ const UploadImageShopkeeper = () => {
   };
 
   return (
-    <AdminLayout>
+    <ShopkeeperLayout>
       <MetaData title={"Upload Product Images"} />
       <div className="row wrapper">
         <div className="col-10 col-lg-8 mt-5 mt-lg-0">
@@ -196,7 +197,7 @@ const UploadImageShopkeeper = () => {
           </form>
         </div>
       </div>
-    </AdminLayout>
+    </ShopkeeperLayout>
   );
 };
 

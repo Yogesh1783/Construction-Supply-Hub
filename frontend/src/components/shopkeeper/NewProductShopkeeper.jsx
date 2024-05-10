@@ -32,7 +32,7 @@ const NewProduct = () => {
 
     if (isSuccess) {
       toast.success("Product created");
-      navigate("/admin/products");
+      navigate("/shopkeeper/products");
     }
   }, [error, isSuccess]);
 

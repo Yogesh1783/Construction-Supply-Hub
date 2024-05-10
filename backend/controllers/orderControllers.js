@@ -15,20 +15,49 @@ export const newOrder = catchAsyncErrors(async (req, res, next) => {
     paymentMethod,
     paymentInfo,
     shopKeeperId,
+    qrPayment,
+    utr, // Include UTR field for QR payments
   } = req.body;
 
-  const order = await Order.create({
-    orderItems,
-    shippingInfo,
-    itemsPrice,
-    taxAmount,
-    shippingAmount,
-    totalAmount,
-    paymentMethod,
-    paymentInfo,
-    user: req.user._id,
-    shopKeeperId,
-  });
+  let order;
+
+  if (paymentMethod === "COD") {
+    // For Cash on Delivery orders
+    order = await Order.create({
+      orderItems,
+      shippingInfo,
+      itemsPrice,
+      taxAmount,
+      shippingAmount,
+      totalAmount,
+      paymentMethod,
+      paymentInfo,
+      user: req.user._id,
+      shopKeeperId,
+    });
+  } else if (paymentMethod === "QR") {
+    // For QR code payments
+    // Handle QR code payment specific logic here
+    // For example, you might want to mark the order as paid immediately
+    paymentInfo.status = "Not Paid";
+
+    // Include UTR field for QR payments
+    order = await Order.create({
+      orderItems,
+      shippingInfo,
+      itemsPrice,
+      taxAmount,
+      shippingAmount,
+      totalAmount,
+      paymentMethod,
+      paymentInfo,
+      user: req.user._id,
+      shopKeeperId,
+      utr, // Add UTR field to the order
+    });
+  } else {
+    return next(new ErrorHandler("Invalid payment method", 400));
+  }
 
   res.status(200).json({
     order,
@@ -102,6 +131,24 @@ export const updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   order.orderStatus = req.body.status;
   order.deliveredAt = Date.now();
+
+  await order.save();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+// Update Payment Status - ADMIN  =>  /api/v1/admin/orders/:id/update_payment_status
+export const updatePaymentStatus = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  // Update payment status
+  order.paymentInfo.status = req.body.status;
 
   await order.save();
 

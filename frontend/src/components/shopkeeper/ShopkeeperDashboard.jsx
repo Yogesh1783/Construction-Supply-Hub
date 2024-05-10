@@ -40,7 +40,7 @@ const ShopkeeperDashboard = () => {
   if (isLoading) return <Loader />;
   return (
     <ShopkeeperLayout>
-      <MetaData title={"Admin Products"} />
+      <MetaData title={"Shopkeeper Products"} />
       <div className="d-flex justify-content-start align-items-center">
         <div className="mb-3 me-4">
           <label className="form-label d-block">Start Date</label>

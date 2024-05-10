@@ -20,7 +20,7 @@ export const stripeCheckoutSession = catchAsyncErrors(
           },
           unit_amount: item?.price * 100,
         },
-        tax_rates: ["txr_1LlBSDA7jBHqn8SB8z4waAin"],
+        tax_rates: ["txr_1P4LjASGYGO1kdGwNh8FQr9m"],
         quantity: item?.quantity,
       };
     });
@@ -29,8 +29,8 @@ export const stripeCheckoutSession = catchAsyncErrors(
 
     const shipping_rate =
       body?.itemsPrice >= 200
-        ? "shr_1LlBW5A7jBHqn8SBG2fsAWwT"
-        : "shr_1NQYwEA7jBHqn8SBs5alau8k";
+        ? "shr_1P4L0fSGYGO1kdGwpE0dfONu"
+        : "shr_1P4KziSGYGO1kdGwLWqsUIwR";
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -116,6 +116,8 @@ export const stripeWebhook = catchAsyncErrors(async (req, res, next) => {
         status: session.payment_status,
       };
 
+      
+
       const orderData = {
         shippingInfo,
         orderItems,
@@ -129,8 +131,11 @@ export const stripeWebhook = catchAsyncErrors(async (req, res, next) => {
       };
 
       await Order.create(orderData);
+      console.log(orderData);
 
-      res.status(200).json({ success: true });
+      res.status(200).json({
+        orderData,
+      });
     }
   } catch (error) {
     console.log("Error => ", error);
