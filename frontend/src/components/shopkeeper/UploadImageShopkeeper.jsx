@@ -48,7 +48,7 @@ const UploadImageShopkeeper = () => {
     if (isSuccess) {
       setImagesPreview([]);
       toast.success("Images Uploaded");
-      navigate("/admin/products");
+      navigate("/shopkeeper/products");
     }
   }, [data, error, isSuccess, deleteError]);
 
