@@ -11,6 +11,7 @@ import ProcessOrder from "../admin/ProcessOrder";
 import ListUsers from "../admin/ListUsers";
 import UpdateUser from "../admin/UpdateUser";
 import ProductReviews from "../admin/ProductReview";
+import ListBecomeSeller from "../admin/ListBecomeSeller";
 
 const adminRoutes = () => {
   return (
@@ -76,6 +77,14 @@ const adminRoutes = () => {
         element={
           <ProtectedRoute admin={true}>
             <ListUsers />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/sellers"
+        element={
+          <ProtectedRoute admin={true}>
+            <ListBecomeSeller />
           </ProtectedRoute>
         }
       />

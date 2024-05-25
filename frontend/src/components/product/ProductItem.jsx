@@ -40,7 +40,7 @@ const ProductItem = ({ product, columnSize }) => {
             id="view_btn"
             className="btn btn-block"
           >
-            View Details
+            <b>View Details</b>
           </Link>
         </div>
       </div>

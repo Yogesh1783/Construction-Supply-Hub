@@ -6,7 +6,29 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  
 }
+
+.extra-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.extra-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.banner-image {
+  width: 100%; /* Ensures the image takes the full width of its container */
+  height: auto;
+  max-height: 500px; /* Adjust the height if needed */
+  object-fit: cover;
+  margin-top: 20px; /* Adds a gap from the top */
+  margin-bottom: 20px;
+}
+
+
 
 /* Scroll Bar */
 

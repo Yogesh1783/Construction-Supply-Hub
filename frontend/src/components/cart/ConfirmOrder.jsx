@@ -10,7 +10,7 @@ const ConfirmOrder = () => {
   const { user } = useSelector((state) => state.auth);
 
   const { itemsPrice, shippingPrice, taxPrice, totalPrice } =
-    caluclateOrderCost(cartItems);
+    caluclateOrderCost(cartItems, shippingInfo);
 
   return (
     <>

@@ -33,6 +33,11 @@ const AdminLayout = ({ children }) => {
       url: "/admin/reviews",
       icon: "fas fa-star",
     },
+    {
+      name: "Become Seller",
+      url: "/admin/sellers",
+      icon: "fas fa-star",
+    },
   ];
 
   return (

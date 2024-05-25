@@ -19,11 +19,13 @@ import MyOrders from "../order/MyOrders";
 import Invoice from "../invoice/Invoice";
 import Home from "../Home";
 import OrderDetails from "../order/OrderDetails";
+import BecomeSeller from "../layout/BecomeSeller";
 
 const userRoutes = () => {
   return (
     <>
       <Route path="/" element={<Home />} />
+
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -116,6 +118,14 @@ const userRoutes = () => {
         element={
           <ProtectedRoute>
             <Invoice />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/become-seller"
+        element={
+          <ProtectedRoute>
+            <BecomeSeller />
           </ProtectedRoute>
         }
       />

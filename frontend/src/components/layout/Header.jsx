@@ -15,7 +15,6 @@ const Header = ({ theme }) => {
   const { user } = useSelector((state) => state.auth);
 
   const isAdmin = user && user.role === "admin";
-
   const isShopkeeper = user && user.role === "shopkeeper";
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -183,6 +182,13 @@ const Header = ({ theme }) => {
                   {" "}
                   Profile{" "}
                 </Link>
+
+                {!(isAdmin || isShopkeeper) && (
+                  <Link className="dropdown-item" to="/become-seller">
+                    {" "}
+                    Become a Seller{" "}
+                  </Link>
+                )}
 
                 <Link
                   className="dropdown-item text-danger"
