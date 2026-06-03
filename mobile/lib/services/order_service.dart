@@ -46,6 +46,6 @@ class OrderService {
   static Future<void> updateShopkeeperOrderStatus(
       String id, String status) async {
     await ApiService.dio
-        .put('/shopkeeper/orders/$id', data: {'orderStatus': status});
+        .put('/shopkeeper/orders/$id', data: {'status': status});
   }
 }

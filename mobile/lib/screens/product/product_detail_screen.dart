@@ -21,15 +21,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int _imageIndex = 0;
   final _commentCtrl = TextEditingController();
   double _rating = 3.0;
+  String? _productId;
+  bool _firstLoad = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final id = ModalRoute.of(context)?.settings.arguments as String?;
-    if (id != null) _loadProduct(id);
+    // Only run on the very first build — prevents re-triggering on every
+    // theme / MediaQuery dependency change while the screen is open.
+    if (_firstLoad) {
+      _firstLoad = false;
+      _productId = ModalRoute.of(context)?.settings.arguments as String?;
+      if (_productId != null) _loadProduct(_productId!);
+    }
   }
 
   Future<void> _loadProduct(String id) async {
+    if (mounted) setState(() => _loading = true);
     try {
       final product = await ProductService.getById(id);
       if (mounted) {
@@ -64,7 +72,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               backgroundColor: Colors.green),
         );
         _commentCtrl.clear();
-        _loadProduct(_product!.id);
+        if (_productId != null) _loadProduct(_productId!);
       }
     } catch (e) {
       if (mounted) {
