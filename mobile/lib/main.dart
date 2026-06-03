@@ -18,6 +18,7 @@ import 'screens/admin/admin_orders_screen.dart';
 import 'screens/shopkeeper/shopkeeper_dashboard_screen.dart';
 import 'screens/shopkeeper/shopkeeper_products_screen.dart';
 import 'screens/shopkeeper/shopkeeper_orders_screen.dart';
+import 'screens/seller/become_seller_screen.dart';
 
 void main() {
   ApiService.init();
@@ -37,20 +38,23 @@ class CshApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Construction Supply Hub',
         debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF1565C0),
-            primary: const Color(0xFF1565C0),
+            seedColor: const Color(0xFFfa9c23),
+            primary: const Color(0xFF232f3e),
+            secondary: const Color(0xFFfa9c23),
+            brightness: Brightness.light,
           ),
           useMaterial3: true,
           appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xFF1565C0),
+            backgroundColor: Color(0xFF232f3e),
             foregroundColor: Colors.white,
             elevation: 0,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF1565C0),
+              backgroundColor: const Color(0xFFfa9c23),
               foregroundColor: Colors.white,
               minimumSize: const Size(double.infinity, 48),
               shape: RoundedRectangleBorder(
@@ -59,6 +63,40 @@ class CshApp extends StatelessWidget {
           ),
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Color(0xFFfa9c23), width: 2),
+            ),
+          ),
+        ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFfa9c23),
+            primary: const Color(0xFF232f3e),
+            secondary: const Color(0xFFfa9c23),
+            brightness: Brightness.dark,
+          ),
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xFF131921),
+            foregroundColor: Colors.white,
+            elevation: 0,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFfa9c23),
+              foregroundColor: Colors.white,
+              minimumSize: const Size(double.infinity, 48),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Color(0xFFfa9c23), width: 2),
+            ),
           ),
         ),
         home: const _AppEntry(),
@@ -78,6 +116,7 @@ class CshApp extends StatelessWidget {
           '/shopkeeper/dashboard': (_) => const ShopkeeperDashboardScreen(),
           '/shopkeeper/products': (_) => const ShopkeeperProductsScreen(),
           '/shopkeeper/orders': (_) => const ShopkeeperOrdersScreen(),
+          '/become-seller': (_) => const BecomeSellerScreen(),
         },
       ),
     );
@@ -112,7 +151,7 @@ class _AppEntryState extends State<_AppEntry> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.construction, size: 72, color: Color(0xFF1565C0)),
+                  Icon(Icons.construction, size: 72, color: Color(0xFFfa9c23)),
                   SizedBox(height: 16),
                   CircularProgressIndicator(),
                 ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../seller/become_seller_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -113,13 +114,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFF1565C0).withOpacity(0.1),
+                color: const Color(0xFFfa9c23).withOpacity(0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 user.role.toUpperCase(),
                 style: const TextStyle(
-                    color: Color(0xFF1565C0), fontWeight: FontWeight.w600),
+                    color: Color(0xFFfa9c23), fontWeight: FontWeight.w600),
               ),
             ),
             if (user.isShopkeeper) ...[
@@ -246,6 +247,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+            if (user.role == 'user') ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.store_outlined),
+                  label: const Text('Become a Seller'),
+                  onPressed: () => Navigator.pushNamed(context, '/become-seller'),
+                ),
+              ),
+            ],
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
