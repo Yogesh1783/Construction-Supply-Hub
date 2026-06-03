@@ -47,8 +47,8 @@ class ProductModel {
         images: (json['images'] as List<dynamic>? ?? [])
             .map((i) => ProductImage.fromJson(i))
             .toList(),
-        category: json['category'] ?? '',
-        seller: json['seller'] ?? '',
+        category: json['category']?.toString() ?? '',
+        seller: json['seller']?.toString() ?? '',
         stock: ProductModel._toInt(json['stock']),
         numOfReviews: ProductModel._toInt(json['numOfReviews']),
         pinCode: json['pinCode'] ?? '',
@@ -91,9 +91,11 @@ class ProductReview {
   });
 
   factory ProductReview.fromJson(Map<String, dynamic> json) => ProductReview(
-        userId: json['user'] ?? '',
+        userId: json['user'] is Map
+            ? (json['user']['_id'] ?? '').toString()
+            : json['user']?.toString() ?? '',
         rating: double.tryParse(json['rating']?.toString() ?? '0') ?? 0.0,
-        comment: json['comment'] ?? '',
-        name: json['name'] ?? '',
+        comment: json['comment']?.toString() ?? '',
+        name: json['name']?.toString() ?? '',
       );
 }
