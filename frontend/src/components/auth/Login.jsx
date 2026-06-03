@@ -16,11 +16,13 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      localStorage.setItem("loggedInUserId", data.user._id);
+      if (data?.user?._id) {
+        localStorage.setItem("loggedInUserId", data.user._id);
+      }
       navigate("/");
     }
     if (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message || 'Login failed. Please check your connection.');
     }
   }, [error, isAuthenticated]);
 
