@@ -4,6 +4,7 @@ import '../../providers/cart_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/order_service.dart';
 import '../../models/order_model.dart';
+import '../map/address_picker_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -103,9 +104,35 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Shipping Information',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Shipping Information',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  TextButton.icon(
+                    icon: const Icon(Icons.map_outlined, size: 18),
+                    label: const Text('Pick on Map'),
+                    onPressed: () async {
+                      final result = await Navigator.push<AddressResult>(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const AddressPickerScreen()),
+                      );
+                      if (result != null) {
+                        setState(() {
+                          _addressCtrl.text = result.address;
+                          _cityCtrl.text = result.city;
+                          if (result.zipCode.isNotEmpty) {
+                            _zipCtrl.text = result.zipCode;
+                          }
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
               TextFormField(
                 controller: _addressCtrl,
                 decoration: const InputDecoration(
