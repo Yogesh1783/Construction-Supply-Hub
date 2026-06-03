@@ -1,0 +1,7 @@
+node_modules/
+backend/config/config.env
+backend/node_modules/
+frontend/node_modules/
+mobile/build/
+*.env
+.DS_Store

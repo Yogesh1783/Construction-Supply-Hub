@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: csh-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node app.js
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: PRODUCTION
+      # Set these secrets manually in Render Dashboard → Environment
+      - key: PORT
+        value: 10000
+      - key: DB_URI
+        sync: false          # MongoDB Atlas connection string
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_TIME
+        value: 7d
+      - key: COOKIE_EXPIRES_TIME
+        value: 7
+      - key: FRONTEND_URL
+        sync: false          # Your deployed React frontend URL
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_EMAIL
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM_EMAIL
+        sync: false
+      - key: SMTP_FROM_NAME
+        value: CSH
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
