@@ -23,6 +23,7 @@ connectDatabase();
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:3000",
+  "https://construction-supply-hub-yogesh-s-projects11.vercel.app",
   "https://construction-supply-hub-git-master-yogesh-s-projects11.vercel.app",
 ];
 
