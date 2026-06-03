@@ -73,7 +73,7 @@ class CartScreen extends StatelessWidget {
                                     Text(
                                       '₹${item.price.toStringAsFixed(0)} each',
                                       style: const TextStyle(
-                                          color: Color(0xFF1565C0)),
+                                          color: Color(0xFFfa9c23)),
                                     ),
                                   ],
                                 ),
@@ -169,7 +169,7 @@ class CartScreen extends StatelessWidget {
                 ? const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Color(0xFF1565C0))
+                    color: Color(0xFFfa9c23))
                 : null,
           ),
         ],

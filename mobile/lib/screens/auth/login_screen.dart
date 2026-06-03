@@ -54,14 +54,14 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 60),
-              const Icon(Icons.construction, size: 80, color: Color(0xFF1565C0)),
+              const Icon(Icons.construction, size: 80, color: Color(0xFFfa9c23)),
               const SizedBox(height: 16),
               Text(
                 'Construction Supply Hub',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: const Color(0xFF1565C0),
+                      color: const Color(0xFFfa9c23),
                     ),
               ),
               const SizedBox(height: 8),

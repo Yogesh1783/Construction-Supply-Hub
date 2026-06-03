@@ -152,7 +152,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF1565C0)),
+                            color: Color(0xFFfa9c23)),
                       ),
                       const Spacer(),
                       Container(

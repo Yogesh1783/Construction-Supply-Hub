@@ -143,7 +143,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
-                                          color: Color(0xFF1565C0)),
+                                          color: Color(0xFFfa9c23)),
                                     ),
                                   ],
                                 ),

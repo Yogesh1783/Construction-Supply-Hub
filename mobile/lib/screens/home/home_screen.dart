@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: _showFilters,
                   icon: const Icon(Icons.filter_list),
                   style: IconButton.styleFrom(
-                    backgroundColor: const Color(0xFF1565C0),
+                    backgroundColor: const Color(0xFFfa9c23),
                     foregroundColor: Colors.white,
                   ),
                 ),

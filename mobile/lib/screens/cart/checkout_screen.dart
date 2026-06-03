@@ -214,7 +214,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ? const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Color(0xFF1565C0))
+                      color: Color(0xFFfa9c23))
                   : null),
         ],
       ),

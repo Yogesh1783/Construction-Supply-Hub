@@ -214,7 +214,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               style: bold
                   ? const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF1565C0),
+                      color: Color(0xFFfa9c23),
                       fontSize: 16)
                   : null),
         ],

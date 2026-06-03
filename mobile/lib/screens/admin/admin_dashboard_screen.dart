@@ -125,8 +125,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: const Color(0xFF1565C0).withOpacity(0.1),
-          child: Icon(icon, color: const Color(0xFF1565C0)),
+          backgroundColor: const Color(0xFFfa9c23).withOpacity(0.1),
+          child: Icon(icon, color: const Color(0xFFfa9c23)),
         ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(subtitle),

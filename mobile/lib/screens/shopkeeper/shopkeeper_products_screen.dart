@@ -105,7 +105,7 @@ class _ShopkeeperProductsScreenState extends State<ShopkeeperProductsScreen> {
                             children: [
                               Text('₹${p.price.toStringAsFixed(0)}',
                                   style: const TextStyle(
-                                      color: Color(0xFF1565C0),
+                                      color: Color(0xFFfa9c23),
                                       fontWeight: FontWeight.bold)),
                               Text(
                                 'Stock: ${p.stock}',

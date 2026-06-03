@@ -18,8 +18,16 @@ export const registerSeller = catchAsyncErrors(async (req, res, next) => {
 
   const newSeller = await Seller.create({
     user: userId,
-    name: fetchedUser.name, // Use name from User model
-    email: fetchedUser.email, // Use email from User model
+    name: fetchedUser.name,
+    email: fetchedUser.email,
+    shopName,
+    shopAddress,
+    pinCode,
+  });
+
+  // Promote user role to shopkeeper immediately
+  await User.findByIdAndUpdate(userId, {
+    role: 'shopkeeper',
     shopName,
     shopAddress,
     pinCode,

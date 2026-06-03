@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/seller_service.dart';
 import '../../services/api_service.dart';
 
@@ -34,13 +36,16 @@ class _BecomeSellerScreenState extends State<BecomeSellerScreen> {
         pinCode: _pinCodeCtrl.text.trim(),
       );
       if (!mounted) return;
+      // Reload profile so the app reflects the new shopkeeper role
+      await context.read<AuthProvider>().loadProfile();
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Seller request submitted! Admin will review it.'),
+          content: Text('Welcome! You are now a seller.'),
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

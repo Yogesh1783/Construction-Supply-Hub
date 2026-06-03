@@ -170,7 +170,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                                     '₹${o.totalAmount.toStringAsFixed(0)}',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Color(0xFF1565C0)),
+                                        color: Color(0xFFfa9c23)),
                                   ),
                                 ],
                               ),
