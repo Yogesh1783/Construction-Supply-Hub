@@ -81,7 +81,7 @@ userSchema.pre("findOneAndUpdate", function(next) {
 // Encrypting password before saving the user
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+    return next();
   }
 
   this.password = await bcrypt.hash(this.password, 10);

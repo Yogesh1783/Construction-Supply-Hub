@@ -1,6 +1,20 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../models/user_model.dart';
 import '../services/auth_service.dart';
+
+String _extractError(dynamic e) {
+  if (e is DioException) {
+    final data = e.response?.data;
+    if (data is Map && data['message'] != null) {
+      return data['message'].toString();
+    }
+    if (e.type == DioExceptionType.connectionError) {
+      return 'Cannot connect to server. Check your internet.';
+    }
+  }
+  return e.toString().replaceAll('Exception: ', '');
+}
 
 enum AuthStatus { initial, loading, authenticated, unauthenticated }
 
@@ -26,7 +40,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _error = e.toString().replaceAll('Exception: ', '');
+      _error = _extractError(e);
       _status = AuthStatus.unauthenticated;
       notifyListeners();
       return false;
@@ -44,7 +58,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _error = e.toString().replaceAll('Exception: ', '');
+      _error = _extractError(e);
       _status = AuthStatus.unauthenticated;
       notifyListeners();
       return false;

@@ -105,8 +105,8 @@ class _AppEntryState extends State<_AppEntry> {
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
       builder: (_, auth, __) {
-        if (auth.status == AuthStatus.initial ||
-            auth.status == AuthStatus.loading) {
+        // Only show splash on very first app load
+        if (auth.status == AuthStatus.initial) {
           return const Scaffold(
             body: Center(
               child: Column(
@@ -120,9 +120,14 @@ class _AppEntryState extends State<_AppEntry> {
             ),
           );
         }
-        return auth.isAuthenticated
-            ? const HomeScreen()
-            : const LoginScreen();
+        // When loading (login/register in progress), keep showing
+        // the current screen so it can display errors via SnackBar
+        if (auth.isAuthenticated) {
+          if (auth.isAdmin) return const AdminDashboardScreen();
+          if (auth.isShopkeeper) return const ShopkeeperDashboardScreen();
+          return const HomeScreen();
+        }
+        return const LoginScreen();
       },
     );
   }

@@ -258,7 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: () async {
                   await context.read<AuthProvider>().logout();
                   if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, '/login');
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   }
                 },
               ),

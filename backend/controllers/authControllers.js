@@ -46,9 +46,12 @@ export const loginUser = catchAsyncErrors(async (req, res, next) => {
 
 // Logout user   =>  /api/v1/logout
 export const logout = catchAsyncErrors(async (req, res, next) => {
+  const isProduction = process.env.NODE_ENV === "PRODUCTION";
   res.cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   });
 
   res.status(200).json({

@@ -28,22 +28,17 @@ class _LoginScreenState extends State<LoginScreen> {
     final ok = await auth.login(_emailCtrl.text.trim(), _passwordCtrl.text);
     if (!mounted) return;
     if (ok) {
-      final user = auth.user!;
-      if (user.isAdmin) {
-        Navigator.pushReplacementNamed(context, '/admin/dashboard');
-      } else if (user.isShopkeeper) {
-        Navigator.pushReplacementNamed(context, '/shopkeeper/dashboard');
-      } else {
-        Navigator.pushReplacementNamed(context, '/home');
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(auth.error ?? 'Login failed'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      // Pop back to root so _AppEntry's HomeScreen is visible (handles the case
+      // where this LoginScreen was pushed as a named route via logout flow)
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      return;
     }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(auth.error ?? 'Login failed'),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   @override

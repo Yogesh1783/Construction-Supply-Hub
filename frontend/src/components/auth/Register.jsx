@@ -25,7 +25,7 @@ const Register = () => {
       navigate("/");
     }
     if (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message || 'Registration failed. Please check your connection.');
     }
   }, [error, isAuthenticated]);
 

@@ -34,15 +34,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
     if (!mounted) return;
     if (ok) {
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(auth.error ?? 'Registration failed'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      return;
     }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(auth.error ?? 'Registration failed'),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   @override

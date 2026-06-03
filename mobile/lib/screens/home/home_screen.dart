@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 case 'logout':
                   await auth.logout();
                   if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, '/login');
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   }
                   break;
               }
