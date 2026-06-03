@@ -20,17 +20,17 @@ dotenv.config({ path: "config/config.env" });
 connectDatabase();
 
 // CORS — allow React frontend and mobile (mobile ignores CORS automatically)
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "http://localhost:3000",
-  "https://construction-supply-hub-yogesh-s-projects11.vercel.app",
-  "https://construction-supply-hub-git-master-yogesh-s-projects11.vercel.app",
-];
+const allowedOriginPattern = /^https:\/\/.*yogesh-s-projects11\.vercel\.app$/;
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        origin === process.env.FRONTEND_URL ||
+        origin === "http://localhost:3000" ||
+        allowedOriginPattern.test(origin)
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
