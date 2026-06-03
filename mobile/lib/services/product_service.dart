@@ -80,4 +80,22 @@ class ProductService {
   static Future<void> deleteShopkeeperProduct(String id) async {
     await ApiService.dio.delete('${ApiConstants.shopkeeperProducts}/$id');
   }
+
+  static Future<void> createShopkeeperProduct({
+    required String name,
+    required String description,
+    required double price,
+    required String category,
+    required int stock,
+    required String seller,
+  }) async {
+    await ApiService.dio.post(ApiConstants.shopkeeperProducts, data: {
+      'name': name,
+      'description': description,
+      'price': price,
+      'category': category,
+      'stock': stock,
+      'seller': seller,
+    });
+  }
 }

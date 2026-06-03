@@ -112,15 +112,22 @@ class _HomeScreenState extends State<HomeScreen> {
           PopupMenuButton(
             icon: const Icon(Icons.person),
             itemBuilder: (_) => [
-              const PopupMenuItem(value: 'profile', child: Text('Profile')),
-              const PopupMenuItem(value: 'orders', child: Text('My Orders')),
-              if (auth.isAdmin)
+              if (auth.isAuthenticated) ...[
+                const PopupMenuItem(value: 'profile', child: Text('Profile')),
+                const PopupMenuItem(value: 'orders', child: Text('My Orders')),
+                if (auth.isAdmin)
+                  const PopupMenuItem(
+                      value: 'admin', child: Text('Admin Dashboard')),
+                if (auth.isShopkeeper)
+                  const PopupMenuItem(
+                      value: 'shopkeeper',
+                      child: Text('Shopkeeper Dashboard')),
+                const PopupMenuItem(value: 'logout', child: Text('Logout')),
+              ] else ...[
+                const PopupMenuItem(value: 'login', child: Text('Login')),
                 const PopupMenuItem(
-                    value: 'admin', child: Text('Admin Dashboard')),
-              if (auth.isShopkeeper)
-                const PopupMenuItem(
-                    value: 'shopkeeper', child: Text('Shopkeeper Dashboard')),
-              const PopupMenuItem(value: 'logout', child: Text('Logout')),
+                    value: 'register', child: Text('Register')),
+              ],
             ],
             onSelected: (val) async {
               switch (val) {
@@ -135,6 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   break;
                 case 'shopkeeper':
                   Navigator.pushNamed(context, '/shopkeeper/dashboard');
+                  break;
+                case 'login':
+                  Navigator.pushNamed(context, '/login');
+                  break;
+                case 'register':
+                  Navigator.pushNamed(context, '/register');
                   break;
                 case 'logout':
                   await auth.logout();

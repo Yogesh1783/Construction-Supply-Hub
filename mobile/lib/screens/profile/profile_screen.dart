@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/theme_provider.dart';
 import '../seller/become_seller_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -244,6 +245,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ],
+                ),
+              ),
+            ),
+            // Theme toggle
+            const SizedBox(height: 12),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Consumer<ThemeProvider>(
+                  builder: (_, tp, __) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Appearance',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      SegmentedButton<ThemeMode>(
+                        segments: const [
+                          ButtonSegment(
+                              value: ThemeMode.light,
+                              icon: Icon(Icons.light_mode),
+                              label: Text('Light')),
+                          ButtonSegment(
+                              value: ThemeMode.system,
+                              icon: Icon(Icons.brightness_auto),
+                              label: Text('System')),
+                          ButtonSegment(
+                              value: ThemeMode.dark,
+                              icon: Icon(Icons.dark_mode),
+                              label: Text('Dark')),
+                        ],
+                        selected: {tp.mode},
+                        onSelectionChanged: (s) => tp.setMode(s.first),
+                        style: ButtonStyle(
+                          iconSize: WidgetStateProperty.all(16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

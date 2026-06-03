@@ -72,6 +72,15 @@ class _ShopkeeperProductsScreenState extends State<ShopkeeperProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('My Products')),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final added = await Navigator.pushNamed(
+              context, '/shopkeeper/add-product');
+          if (added == true) _load();
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('Add Product'),
+      ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _products.isEmpty

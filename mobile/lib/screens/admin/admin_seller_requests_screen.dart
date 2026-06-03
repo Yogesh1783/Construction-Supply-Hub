@@ -24,8 +24,13 @@ class _AdminSellerRequestsScreenState
   Future<void> _load() async {
     setState(() => _loading = true);
     try {
-      final sellers = await SellerService.getSellerRequests();
-      if (mounted) setState(() => _sellers = sellers);
+      final all = await SellerService.getSellerRequests();
+      // Only show pending requests — approved ones are done
+      if (mounted) {
+        setState(() => _sellers = all
+            .where((s) => (s['status'] ?? 'pending') == 'pending')
+            .toList());
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
