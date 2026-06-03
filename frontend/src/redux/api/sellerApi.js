@@ -3,7 +3,10 @@ import { userApi } from "./userApi";
 
 export const sellerApi = createApi({
   reducerPath: "sellerApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_API_URL || "/api/v1",
+    credentials: "include",
+  }),
   endpoints: (builder) => ({
     registerSeller: builder.mutation({
       query(body) {

@@ -5,7 +5,7 @@ class ApiConstants {
   // --- DEVELOPMENT (physical device — use your PC's local IP) ---
   // static const String baseUrl = 'http://192.168.1.X:4000/api/v1';
   // --- PRODUCTION (Render.com — replace with your actual URL after deploy) ---
-  static const String baseUrl = 'https://csh-backend.onrender.com/api/v1';
+  static const String baseUrl = 'https://construction-supply-hub-2no0.onrender.com/api/v1';
 
   // Auth
   static const String login = '/login';
