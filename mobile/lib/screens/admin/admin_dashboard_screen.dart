@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/order_service.dart';
 import '../../services/product_service.dart';
+import '../../services/seller_service.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -14,6 +15,7 @@ class AdminDashboardScreen extends StatefulWidget {
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   int _productCount = 0;
   int _orderCount = 0;
+  int _pendingSellerCount = 0;
   bool _loading = true;
 
   @override
@@ -24,12 +26,18 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Future<void> _load() async {
     try {
-      final products = await ProductService.getAdminProducts();
-      final orders = await OrderService.getAdminOrders();
+      final results = await Future.wait([
+        ProductService.getAdminProducts(),
+        OrderService.getAdminOrders(),
+        SellerService.getSellerRequests(),
+      ]);
       if (mounted) {
         setState(() {
-          _productCount = products.length;
-          _orderCount = orders.length;
+          _productCount = (results[0] as List).length;
+          _orderCount = (results[1] as List).length;
+          _pendingSellerCount = (results[2] as List)
+              .where((s) => (s['status'] ?? 'pending') == 'pending')
+              .length;
         });
       }
     } catch (_) {}
@@ -72,6 +80,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               'Orders', _orderCount, Icons.receipt, Colors.green)),
                     ],
                   ),
+                  const SizedBox(height: 12),
+                  _statCard(
+                    'Pending Seller Requests',
+                    _pendingSellerCount,
+                    Icons.store_outlined,
+                    Colors.orange,
+                    fullWidth: true,
+                  ),
                   const SizedBox(height: 24),
                   const Text('Manage',
                       style: TextStyle(
@@ -91,14 +107,23 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     onTap: () =>
                         Navigator.pushNamed(context, '/admin/orders'),
                   ),
+                  _menuCard(
+                    icon: Icons.store_outlined,
+                    title: 'Seller Requests',
+                    subtitle: 'Approve or reject seller applications',
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/admin/seller-requests'),
+                    badge: _pendingSellerCount,
+                  ),
                 ],
               ),
             ),
     );
   }
 
-  Widget _statCard(String label, int count, IconData icon, Color color) {
-    return Card(
+  Widget _statCard(String label, int count, IconData icon, Color color,
+      {bool fullWidth = false}) {
+    final card = Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -113,6 +138,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
       ),
     );
+    return fullWidth ? SizedBox(width: double.infinity, child: card) : card;
   }
 
   Widget _menuCard({
@@ -120,6 +146,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     required String title,
     required String subtitle,
     required VoidCallback onTap,
+    int badge = 0,
   }) {
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
@@ -130,7 +157,26 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (badge > 0)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text('$badge',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold)),
+              ),
+            const SizedBox(width: 4),
+            const Icon(Icons.chevron_right),
+          ],
+        ),
         onTap: onTap,
       ),
     );

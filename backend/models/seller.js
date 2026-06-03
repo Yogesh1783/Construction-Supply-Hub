@@ -25,6 +25,11 @@ const sellerSchema = new mongoose.Schema(
     pinCode: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
+    },
   },
   { timestamps: true }
 );

@@ -19,6 +19,7 @@ import 'screens/shopkeeper/shopkeeper_dashboard_screen.dart';
 import 'screens/shopkeeper/shopkeeper_products_screen.dart';
 import 'screens/shopkeeper/shopkeeper_orders_screen.dart';
 import 'screens/seller/become_seller_screen.dart';
+import 'screens/admin/admin_seller_requests_screen.dart';
 
 void main() {
   ApiService.init();
@@ -117,6 +118,7 @@ class CshApp extends StatelessWidget {
           '/shopkeeper/products': (_) => const ShopkeeperProductsScreen(),
           '/shopkeeper/orders': (_) => const ShopkeeperOrdersScreen(),
           '/become-seller': (_) => const BecomeSellerScreen(),
+          '/admin/seller-requests': (_) => const AdminSellerRequestsScreen(),
         },
       ),
     );

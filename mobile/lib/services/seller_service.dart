@@ -12,4 +12,17 @@ class SellerService {
       'pinCode': pinCode,
     });
   }
+
+  static Future<List<dynamic>> getSellerRequests() async {
+    final res = await ApiService.dio.get('/admin/sellers');
+    return res.data['sellers'] as List<dynamic>;
+  }
+
+  static Future<void> approveSeller(String id) async {
+    await ApiService.dio.put('/admin/sellers/$id/approve');
+  }
+
+  static Future<void> deleteSeller(String id) async {
+    await ApiService.dio.delete('/admin/sellers/$id');
+  }
 }

@@ -116,6 +116,15 @@ export const userApi = createApi({
       },
       invalidatesTags: ["AdminSellers"],
     }),
+    approveSeller: builder.mutation({
+      query(id) {
+        return {
+          url: `/admin/sellers/${id}/approve`,
+          method: "PUT",
+        };
+      },
+      invalidatesTags: ["AdminUsers"],
+    }),
   }),
 });
 
@@ -133,4 +142,5 @@ export const {
   useGetAdminSellersQuery,
   useGetSellerDetailsQuery,
   useDeleteSellerMutation,
+  useApproveSellerMutation,
 } = userApi;

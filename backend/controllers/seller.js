@@ -23,14 +23,7 @@ export const registerSeller = catchAsyncErrors(async (req, res, next) => {
     shopName,
     shopAddress,
     pinCode,
-  });
-
-  // Promote user role to shopkeeper immediately
-  await User.findByIdAndUpdate(userId, {
-    role: 'shopkeeper',
-    shopName,
-    shopAddress,
-    pinCode,
+    status: 'pending',
   });
 
   res.status(200).json({
@@ -62,6 +55,28 @@ export const getSellerDetails = catchAsyncErrors(async (req, res, next) => {
     seller,
   });
 });
+// Approve Seller - ADMIN  =>  PUT /api/v1/admin/sellers/:id/approve
+export const approveSeller = catchAsyncErrors(async (req, res, next) => {
+  const seller = await Seller.findById(req.params.id);
+
+  if (!seller) {
+    return next(new ErrorHandler(`Seller not found with id: ${req.params.id}`, 404));
+  }
+
+  seller.status = 'approved';
+  await seller.save();
+
+  await User.findByIdAndUpdate(seller.user, {
+    role: 'shopkeeper',
+    shopName: seller.shopName,
+    shopAddress: seller.shopAddress,
+    pinCode: seller.pinCode,
+  });
+
+  res.status(200).json({ success: true, message: 'Seller approved' });
+});
+
+// Delete / Reject Seller - ADMIN  =>  DELETE /api/v1/admin/sellers/:id
 export const deleteSeller = catchAsyncErrors(async (req, res, next) => {
   const seller = await Seller.findById(req.params.id);
 
