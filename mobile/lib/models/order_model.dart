@@ -29,6 +29,11 @@ class OrderModel {
     required this.createdAt,
   });
 
+  static double _d(dynamic v) =>
+      v == null ? 0.0 : double.tryParse(v.toString()) ?? 0.0;
+  static int _i(dynamic v) =>
+      v == null ? 0 : int.tryParse(v.toString()) ?? 0;
+
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         id: json['_id'] ?? '',
         shippingInfo: ShippingInfo.fromJson(json['shippingInfo'] ?? {}),
@@ -45,10 +50,10 @@ class OrderModel {
         paymentInfo: json['paymentInfo'] != null
             ? PaymentInfo.fromJson(json['paymentInfo'])
             : null,
-        itemsPrice: (json['itemsPrice'] ?? 0).toDouble(),
-        taxAmount: (json['taxAmount'] ?? 0).toDouble(),
-        shippingAmount: (json['shippingAmount'] ?? 0).toDouble(),
-        totalAmount: (json['totalAmount'] ?? 0).toDouble(),
+        itemsPrice: OrderModel._d(json['itemsPrice']),
+        taxAmount: OrderModel._d(json['taxAmount']),
+        shippingAmount: OrderModel._d(json['shippingAmount']),
+        totalAmount: OrderModel._d(json['totalAmount']),
         orderStatus: json['orderStatus'] ?? 'Processing',
         createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
       );
@@ -103,9 +108,9 @@ class OrderItem {
 
   factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
         name: json['name'] ?? '',
-        quantity: json['quantity'] ?? 0,
+        quantity: OrderModel._i(json['quantity']),
         image: json['image'] ?? '',
-        price: (json['price'] ?? 0).toDouble(),
+        price: OrderModel._d(json['price']),
         productId: json['product'] ?? '',
       );
 
