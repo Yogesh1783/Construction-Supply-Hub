@@ -81,6 +81,38 @@ class ProductService {
     await ApiService.dio.delete('${ApiConstants.shopkeeperProducts}/$id');
   }
 
+  static Future<ProductModel> getShopkeeperProductById(String id) async {
+    final res = await ApiService.dio.get('${ApiConstants.shopkeeperProducts}/$id');
+    return ProductModel.fromJson(res.data['product']);
+  }
+
+  static Future<void> updateShopkeeperProduct({
+    required String id,
+    required String name,
+    required String description,
+    required double price,
+    required String category,
+    required int stock,
+    required String seller,
+  }) async {
+    await ApiService.dio.put('${ApiConstants.shopkeeperProducts}/$id', data: {
+      'name': name,
+      'description': description,
+      'price': price,
+      'category': category,
+      'stock': stock,
+      'seller': seller,
+    });
+  }
+
+  static Future<void> uploadShopkeeperProductImages(
+      String id, List<String> base64Images) async {
+    await ApiService.dio.put(
+      '${ApiConstants.shopkeeperProducts}/$id/upload_images',
+      data: {'images': base64Images},
+    );
+  }
+
   static Future<void> createShopkeeperProduct({
     required String name,
     required String description,

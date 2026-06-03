@@ -126,9 +126,36 @@ class _ShopkeeperProductsScreenState extends State<ShopkeeperProductsScreen> {
                               ),
                             ],
                           ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _delete(p.id, p.name),
+                          trailing: PopupMenuButton<String>(
+                            onSelected: (val) async {
+                              if (val == 'edit') {
+                                final updated = await Navigator.pushNamed(
+                                  context,
+                                  '/shopkeeper/edit-product',
+                                  arguments: p,
+                                );
+                                if (updated == true) _load();
+                              } else if (val == 'delete') {
+                                _delete(p.id, p.name);
+                              }
+                            },
+                            itemBuilder: (_) => const [
+                              PopupMenuItem(
+                                  value: 'edit',
+                                  child: ListTile(
+                                      leading: Icon(Icons.edit_outlined),
+                                      title: Text('Edit'),
+                                      contentPadding: EdgeInsets.zero)),
+                              PopupMenuItem(
+                                  value: 'delete',
+                                  child: ListTile(
+                                      leading: Icon(Icons.delete_outlined,
+                                          color: Colors.red),
+                                      title: Text('Delete',
+                                          style:
+                                              TextStyle(color: Colors.red)),
+                                      contentPadding: EdgeInsets.zero)),
+                            ],
                           ),
                           onTap: () => Navigator.pushNamed(
                             context,

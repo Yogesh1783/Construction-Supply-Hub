@@ -86,7 +86,7 @@ class _ShopkeeperDashboardScreenState
                   const SizedBox(height: 8),
                   _statCard(
                     'Total Revenue',
-                    '₹${_totalRevenue.toStringAsFixed(0)}',
+                    _totalRevenue.toStringAsFixed(0),
                     Icons.currency_rupee,
                     Colors.purple,
                     wide: true,
@@ -101,14 +101,16 @@ class _ShopkeeperDashboardScreenState
                     title: 'My Products',
                     subtitle: 'View and manage your products',
                     onTap: () => Navigator.pushNamed(
-                        context, '/shopkeeper/products'),
+                            context, '/shopkeeper/products')
+                        .then((_) => _load()),
                   ),
                   _menuCard(
                     icon: Icons.receipt_long,
                     title: 'My Orders',
                     subtitle: 'View and update order status',
                     onTap: () =>
-                        Navigator.pushNamed(context, '/shopkeeper/orders'),
+                        Navigator.pushNamed(context, '/shopkeeper/orders')
+                            .then((_) => _load()),
                   ),
                 ],
               ),

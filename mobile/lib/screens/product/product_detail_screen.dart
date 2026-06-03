@@ -32,17 +32,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Future<void> _loadProduct(String id) async {
     try {
       final product = await ProductService.getById(id);
-      final canReview = await ProductService.canReview(id);
       if (mounted) {
         setState(() {
           _product = product;
-          _canReview = canReview;
           _loading = false;
         });
       }
     } catch (e) {
       if (mounted) setState(() => _loading = false);
+      return;
     }
+    // Check review eligibility separately — requires auth, ignore if guest
+    try {
+      final canReview = await ProductService.canReview(id);
+      if (mounted) setState(() => _canReview = canReview);
+    } catch (_) {}
   }
 
   Future<void> _submitReview() async {
@@ -280,6 +284,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   icon: const Icon(Icons.shopping_cart),
                   label: const Text('Add to Cart'),
                   onPressed: () {
+                    if (!auth.isAuthenticated) {
+                      Navigator.pushNamed(context, '/login');
+                      return;
+                    }
                     cart.addItem(p);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

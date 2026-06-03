@@ -21,6 +21,7 @@ import 'screens/shopkeeper/shopkeeper_dashboard_screen.dart';
 import 'screens/shopkeeper/shopkeeper_products_screen.dart';
 import 'screens/shopkeeper/shopkeeper_orders_screen.dart';
 import 'screens/shopkeeper/shopkeeper_add_product_screen.dart';
+import 'screens/shopkeeper/shopkeeper_edit_product_screen.dart';
 import 'screens/seller/become_seller_screen.dart';
 
 // ── Shared brand colours ────────────────────────────────────────────
@@ -158,6 +159,7 @@ class CshApp extends StatelessWidget {
         '/shopkeeper/products':      (_) => const ShopkeeperProductsScreen(),
         '/shopkeeper/orders':        (_) => const ShopkeeperOrdersScreen(),
         '/shopkeeper/add-product':   (_) => const ShopkeeperAddProductScreen(),
+        '/shopkeeper/edit-product':  (_) => const ShopkeeperEditProductScreen(),
         '/become-seller':            (_) => const BecomeSellerScreen(),
       },
     );
