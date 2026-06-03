@@ -33,19 +33,24 @@ class ProductModel {
     required this.reviews,
   });
 
+  static double _toDouble(dynamic v) =>
+      v == null ? 0.0 : double.tryParse(v.toString()) ?? 0.0;
+  static int _toInt(dynamic v) =>
+      v == null ? 0 : int.tryParse(v.toString()) ?? 0;
+
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json['_id'] ?? '',
         name: json['name'] ?? '',
-        price: (json['price'] ?? 0).toDouble(),
+        price: ProductModel._toDouble(json['price']),
         description: json['description'] ?? '',
-        ratings: (json['ratings'] ?? 0).toDouble(),
+        ratings: ProductModel._toDouble(json['ratings']),
         images: (json['images'] as List<dynamic>? ?? [])
             .map((i) => ProductImage.fromJson(i))
             .toList(),
         category: json['category'] ?? '',
         seller: json['seller'] ?? '',
-        stock: json['stock'] ?? 0,
-        numOfReviews: json['numOfReviews'] ?? 0,
+        stock: ProductModel._toInt(json['stock']),
+        numOfReviews: ProductModel._toInt(json['numOfReviews']),
         pinCode: json['pinCode'] ?? '',
         shopName: json['shopName'] ?? '',
         shopAddress: json['shopAddress'] ?? '',
@@ -87,7 +92,7 @@ class ProductReview {
 
   factory ProductReview.fromJson(Map<String, dynamic> json) => ProductReview(
         userId: json['user'] ?? '',
-        rating: (json['rating'] ?? 0).toDouble(),
+        rating: double.tryParse(json['rating']?.toString() ?? '0') ?? 0.0,
         comment: json['comment'] ?? '',
         name: json['name'] ?? '',
       );
